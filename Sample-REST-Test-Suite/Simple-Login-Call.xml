@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="c3fbf613-f789-4fe0-a4e5-1757eba3ccc2" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Simple Login Call" searchProperties="true" timeout="0" xmlns:con="http://eviware.com/soapui/config">
+      <con:description>Simple test can be used to show how easy it is to call a simple REST Service. You can have one or multiple REST endpoints that are not related to each other. This is commonly used when running integration tests.
+
+Steps:
+First step turns on Virtual REST Service
+Second step makes the Login call to the virtual Service and validates that you get a "200 OK" status code
+Third Step turns off the virtual REST Service
+
+
+NOTE: If you would like to run the Login step without as a standalone step please turn on the virtual service under the ReadyAPI Virtualization Tool</con:description>
+      <con:settings><con:setting id="c3fbf613-f789-4fe0-a4e5-1757eba3ccc2fileName">Simple-Login-Call</con:setting></con:settings>
+      <con:savedRecentRuns>1</con:savedRecentRuns>
+      <con:testStep type="VirtRunnerTestStep" name="Start Service" id="49e7dd6f-1ad0-4104-8d0a-2bc166ee29e4">
+        <con:settings/>
+        <con:config><url>localhost</url><server>EcommerceVirt</server><action>run</action></con:config>
+      </con:testStep>
+      <con:testStep type="datasource" name="Data Source" id="fb8923ed-0080-4501-a980-86ff7173a589"><con:settings/><con:config xsi:type="con:DataSourceStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSource type="Data Generator"><con:configuration><generatedDataCount>10</generatedDataCount><generatorsTotalNumber>2</generatorsTotalNumber><lastSelectedProperty>0</lastSelectedProperty><GeneratorType0>CITY</GeneratorType0><PropertyName0>city</PropertyName0><repetitionCountcity>0</repetitionCountcity><repeatValuescity>false</repeatValuescity><GeneratorType1>BOOL</GeneratorType1><PropertyName1>city2</PropertyName1><repetitionCountcity2>0</repetitionCountcity2><repeatValuescity2>false</repeatValuescity2><boolViewcity2>Classic</boolViewcity2><escapeSpaceSequence/></con:configuration></con:dataSource><con:shared>false</con:shared><con:restartShared>false</con:restartShared><con:property>city</con:property><con:property>city2</con:property><con:restartOnRun>true</con:restartOnRun><con:stopDatasourceExhausted>false</con:stopDatasourceExhausted></con:config></con:testStep>
+      <con:testStep type="restrequest" name="Login" id="8c4c6e50-238e-4476-80dc-15d7b89fff4f">
+        <con:settings/>
+        <con:config service="Ecommerce" resourcePath="/login/" methodName="Login" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Login" id="af9f46ad-d5ad-4c3c-bcde-e2f266c3dc2c" mediaType="application/json" postQueryString="false">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;con:entry key="Accept" value="application/json" xmlns:con="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8084</con:endpoint>
+            <con:request>{"sample" : "1 "}</con:request>
+            <con:originalUri>http://localhost/login</con:originalUri>
+            <con:assertion type="Valid HTTP Status Codes" id="6fa93424-ce3a-4243-a633-13a0d993d200" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" name="Response SLA" id="90d725b4-36d2-420d-9eca-2e283721bf3d">
+              <con:configuration><SLA>350</SLA></con:configuration>
+            </con:assertion>
+            <con:assertion type="Simple Contains" id="af8b0cbd-a1dc-42bc-af28-9cc89f46d5ef" name="Contains">
+              <con:configuration>
+                <token>${Login#Response}</token>
+                <ignoreCase>false</ignoreCase>
+                <useRegEx>false</useRegEx>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Simple Contains" id="229829b5-df59-4961-8659-3a11ce09d880" name="Contains 2">
+              <con:configuration>
+                <token>${Login#Username}</token>
+                <ignoreCase>false</ignoreCase>
+                <useRegEx>false</useRegEx>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Simple Contains" name="Contains 2 2" id="a1608396-d323-4cf4-a39b-32cd9073c173">
+              <con:configuration>
+                <token>${Login#Username}</token>
+                <ignoreCase>false</ignoreCase>
+                <useRegEx>false</useRegEx>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="GroovyScriptAssertion" name="Script Assertion" id="edb5bc10-b69e-467c-924a-1158c39e6d23"><con:configuration><scriptText>def response = messageExchange.response.responseContent
+def json = new groovy.json.JsonSlurper().parseText(response.toString())
+
+//assert json.data[0].payload.type == "type/cardStatusChange"
+//assert json.data[0].payload.cardId == "ID123456"</scriptText></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" id="c6d1b992-e698-4210-843e-978b89f8f004" name="Smart Assertion">
+              <con:configuration xsi:type="con:DataAndMetadataAssertion">
+                <con:mode>Received Data</con:mode>
+                <con:elements>
+                  <con:path>$['sessionid']</con:path>
+                  <con:element>sessionid</con:element>
+                  <con:operatorId>1</con:operatorId>
+                  <con:enabled>true</con:enabled>
+                  <con:expectedValue>${Login#Username}</con:expectedValue>
+                  <con:caseSensitive>true</con:caseSensitive>
+                  <con:numberType>false</con:numberType>
+                  <con:expectedDataType>1</con:expectedDataType>
+                </con:elements>
+                <con:originalMessage>{ "sessionid" : "229834767608467" }</con:originalMessage>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Simple NotContains" id="4002dee5-b621-4243-b53b-3abb6443ee63" name="Not Contains">
+              <con:configuration>
+                <token>password</token>
+                <ignoreCase>false</ignoreCase>
+                <useRegEx>false</useRegEx>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Simple Equals" id="1b047ea8-cd6f-4379-bbd8-04b39591f965" name="Equals" disabled="true">
+              <con:configuration>
+                <patternObjectId>49e7dd6f-1ad0-4104-8d0a-2bc166ee29e4</patternObjectId>
+                <patternProperty>URL</patternProperty>
+                <caseSensitive>true</caseSensitive>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Simple Contains" id="d66c6a27-8966-4c16-89d5-912bfceb5e1a" name="Contains 3">
+              <con:configuration>
+                <token>${Login#Response}</token>
+                <ignoreCase>false</ignoreCase>
+                <useRegEx>false</useRegEx>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>profile</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters><con:entry key="password" value="${Data Source#password}"/><con:entry key="username" value="${Data Source#username}"/></con:parameters>
+            <con:parameterOrder>
+              <con:entry>username</con:entry>
+              <con:entry>password</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="f27a7295-1f08-4642-a3be-7ae9878517f0">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="712e7e53-7afa-4695-8bf2-bc7b9af8c08a">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="834e9f34-445a-4d32-b042-ef79046664e3">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="19b3aa32-a1f5-474e-bd47-6ecf34074e03">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="8adf9beb-0001-459f-b854-d8161046b013">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="85fcf76d-cc70-4a0b-a2f6-7b043cf8233a">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="aaa8e0b8-c982-402f-aabc-53999ad72736">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="613bb63e-dfae-4525-8f53-7cc0745a1be1">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="c7173b3a-fee4-45c8-906c-55deaef4eb0d">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="datasink" name="Data Sink-My1" id="0160c718-1192-4e63-a06c-134f5bbbbee8"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="Excel"><con:configuration><file/><outfile>D:/SmartBear/ReadyAPI/CC Projects/DirectReCharge-soapui-project-RIA-19923/MyExcel-DataSink.xlsx</outfile><worksheet>Sheet1</worksheet><cell>A1</cell><evaluateFormulas>false</evaluateFormulas><append>false</append></con:configuration></con:dataSink><con:properties><con:property><con:name>PropSink</con:name><con:value>${Data Source#city}</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasourceloop" name="Data Source Loop" id="f735a587-4e50-4971-bf54-1ce676253800"><con:settings/><con:config><dataSourceStep>Data Source</dataSourceStep><targetStep>Data Sink-My1</targetStep><discardResults>true</discardResults></con:config></con:testStep><con:testStep type="VirtRunnerTestStep" name="Stop Service" id="e7ca5e17-6eda-4ec7-9628-3cc48017145d">
+        <con:settings/>
+        <con:config><url>localhost</url><server>EcommerceVirt</server><action>stop</action></con:config>
+      </con:testStep><con:testStep type="delay" name="Delay" id="aec2b46a-625c-460a-ab58-d883c8fbbb54"><con:settings/><con:config><delay>1000</delay></con:config></con:testStep><con:properties/>
+      <con:reportParameters/>
+      <con:breakPoints>
+        <con:testStepId>49e7dd6f-1ad0-4104-8d0a-2bc166ee29e4</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+    </con:testCase>

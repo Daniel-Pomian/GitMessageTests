@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="144505c6-b03d-43d1-8f24-71eb41db11e3" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Integration Test" searchProperties="true" timeout="0" xmlns:con="http://eviware.com/soapui/config">
+      <con:description>Integration tests are supposed to show how APIs work in a real world scenarios, integrating APIs together as a user would use an application in a workflow. In the following example we Login, Search for an Item, Buy the Item and then logout. We have strung these steps together
+with some of the tools easy to use feature (GET DATA: See Documentation) which allows you to easily pass values from a response to the next request.
+
+Steps:
+First step turns on Virtual REST Service
+Second step makes the Login call to the virtual Service and validates that it contains a "session id" json element in the response
+Third step picks up the session id that was generated in the first step and searches for an Item ID. The response is also validated for a "200 OK" Status code
+Fourth step picks up the session id from the second step and the item from the third step's response. We validate the response to match the item that was searched for on the third step.
+Fifth Step turns off the virtual REST Service
+
+NOTE: If you would like to run the Login step without as a standalone step please turn on the virtual service under the ReadyAPI Virtualization Tool</con:description>
+      <con:settings><con:setting id="144505c6-b03d-43d1-8f24-71eb41db11e3fileName">Integration-Test</con:setting></con:settings>
+      <con:savedRecentRuns>1</con:savedRecentRuns>
+      <con:testStep type="VirtRunnerTestStep" name="Start Service" id="48307fa4-2bf6-4550-8266-238bd4e03e1c">
+        <con:settings/>
+        <con:config>
+          <url>localhost</url>
+          <server>EcommerceVirt</server>
+          <action>run</action>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="Login" id="d669030a-5e8c-4cf7-badd-9e8ae282be4b">
+        <con:settings/>
+        <con:config service="Ecommerce" resourcePath="/login/" methodName="Login" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Login" id="af9f46ad-d5ad-4c3c-bcde-e2f266c3dc2c" mediaType="application/json" postQueryString="false">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;con:entry key="Accept" value="application/json" xmlns:con="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8084</con:endpoint>
+            <con:request>{"sample" : "1 "}</con:request>
+            <con:originalUri>http://localhost/login</con:originalUri>
+            <con:assertion type="JsonPath Existence Match" id="3e937dfa-57ab-441d-9527-84c33802b690" name="Check for existence of [sessionid]">
+              <con:configuration>
+                <path>$['sessionid']</path>
+                <content>true</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                <ignoreComments>false</ignoreComments>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Response SLA Assertion" id="789b2f42-7fce-4e4a-a499-5d8eb12e4718" name="Response SLA"><con:configuration><SLA>200</SLA></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" id="5bf0b150-66c0-494f-b6a3-2223fd4c24f2" name="Smart Assertion"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2" id="8ed4478f-d2d8-4781-8b89-354f89c16bd8"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 2" id="798b81c4-8827-4fdb-8d32-21815117473c"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 7" id="a07805a8-decb-47d5-8237-95b8a1d324fd"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 7 2" id="bacf4d97-dd18-4376-b45b-10334d237654"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:credentials>
+              <con:selectedAuthProfile>Inherit From Parent</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters>
+              <con:entry key="password" value="Password"/>
+              <con:entry key="username" value="Login"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>username</con:entry>
+              <con:entry>password</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="f27a7295-1f08-4642-a3be-7ae9878517f0">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="712e7e53-7afa-4695-8bf2-bc7b9af8c08a">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="834e9f34-445a-4d32-b042-ef79046664e3">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="19b3aa32-a1f5-474e-bd47-6ecf34074e03">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="8adf9beb-0001-459f-b854-d8161046b013">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="85fcf76d-cc70-4a0b-a2f6-7b043cf8233a">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="aaa8e0b8-c982-402f-aabc-53999ad72736">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="613bb63e-dfae-4525-8f53-7cc0745a1be1">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="c7173b3a-fee4-45c8-906c-55deaef4eb0d">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="Search_Item" id="022d6c41-8d52-4cab-9f55-eb49727b9d52">
+        <con:settings/>
+        <con:config service="Ecommerce" resourcePath="/search" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Search_Item" id="21ae0292-5321-42ce-b85e-257fe3d8c656" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8084</con:endpoint>
+            <con:request/>
+            <con:originalUri>http://localhost/search</con:originalUri>
+            <con:assertion type="Valid HTTP Status Codes" id="36d1d814-2f5d-496a-a713-f00123a641fb" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2" id="563d413b-0b96-41da-ad00-c69215608470"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>23467</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 2" id="116ed1a2-3988-4045-8639-357e50570d4b"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 3" id="fef2ea3f-456b-4e5a-b040-81514fc89aac"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 4" id="47536bd8-9689-4fdc-8a17-8cf6ee98dd23"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 5" id="91f34b7b-13c2-4a84-af7f-1a2988916651"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 6" id="9873a5b6-e50b-467e-9e98-8d0c25e5ffdb"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 7" id="fb39bd39-530a-40eb-a88e-0337741c6387"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 8" id="38c66244-be40-42b1-94a5-149484162df6"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 9" id="7a7c87ba-8841-4468-9d7d-1e2d5d90b18d"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 10" id="1b00c1fc-a1a8-414a-ac6e-7ff50214dc18"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 11" id="fa645ab7-a01a-418b-b63b-aaedb05543be"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 7 2" id="a40e5183-6ab9-486d-9b4f-846e9f0351f5"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <con:entry key="sessionid" value="${Login#Response#$['sessionid']}"/>
+              <con:entry key="searchstring" value="Item 1"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>sessionid</con:entry>
+              <con:entry>searchstring</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="f27a7295-1f08-4642-a3be-7ae9878517f0">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="712e7e53-7afa-4695-8bf2-bc7b9af8c08a">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="834e9f34-445a-4d32-b042-ef79046664e3">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="19b3aa32-a1f5-474e-bd47-6ecf34074e03">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="8adf9beb-0001-459f-b854-d8161046b013">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="85fcf76d-cc70-4a0b-a2f6-7b043cf8233a">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="aaa8e0b8-c982-402f-aabc-53999ad72736">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="613bb63e-dfae-4525-8f53-7cc0745a1be1">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="c7173b3a-fee4-45c8-906c-55deaef4eb0d">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="Buy_Item" id="7406a0eb-e0bd-43d6-b123-be75ffdc0869">
+        <con:settings/>
+        <con:config service="Ecommerce" resourcePath="/buy" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Buy_Item" id="b797c37e-2328-43f9-b0d6-f1d993c8419f" mediaType="application/json" postQueryString="false">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8084</con:endpoint>
+            <con:request/>
+            <con:originalUri>http://localhost/buy</con:originalUri>
+            <con:assertion type="JsonPath Match" id="309b6c3a-d6bc-4c5b-9c6f-e93fc4a16b2f" name="Match content of [id]">
+              <con:configuration>
+                <path>$['purchasestatus']['id']</path>
+                <content>${Search_Item#Response#$['result']['item']['id']}</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                <ignoreComments>false</ignoreComments>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2" id="68f50b69-2315-4df6-bd4d-b474690763c8"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 2" id="9975738e-1f88-4892-9a18-571e699e2078"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters>
+              <con:entry key="buystring" value="${Search_Item#Response#$['result']['item']['id']}"/>
+              <con:entry key="sessionid" value="${Login#Response#$['sessionid']}"/>
+            </con:parameters>
+            <con:environmentSpec>
+              <con:entry environmentId="f27a7295-1f08-4642-a3be-7ae9878517f0">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="712e7e53-7afa-4695-8bf2-bc7b9af8c08a">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="834e9f34-445a-4d32-b042-ef79046664e3">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="19b3aa32-a1f5-474e-bd47-6ecf34074e03">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="8adf9beb-0001-459f-b854-d8161046b013">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="85fcf76d-cc70-4a0b-a2f6-7b043cf8233a">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="aaa8e0b8-c982-402f-aabc-53999ad72736">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="613bb63e-dfae-4525-8f53-7cc0745a1be1">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="c7173b3a-fee4-45c8-906c-55deaef4eb0d">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="Logout" id="3d09394d-f9db-48d3-aa7c-fa0869a0f163">
+        <con:settings/>
+        <con:config service="Ecommerce" resourcePath="/logout" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Logout" id="05080aa5-8817-44ff-ad88-cf8aec040aef" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;con:entry key="Accept" value="application/json" xmlns:con="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8084</con:endpoint>
+            <con:request/>
+            <con:originalUri>http://localhost/logout</con:originalUri>
+            <con:assertion type="JsonPath Match" id="a983a8c8-f1df-408e-be55-cc5d344ec31e" name="Match content of [Successfully logged out session]">
+              <con:configuration>
+                <path>$['Successfully logged out session']</path>
+                <content>"OK"</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                <ignoreComments>false</ignoreComments>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2" id="251e2465-ebac-4fbe-bec9-ffc6461758d2"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 2" id="6fdb0960-6069-4609-aa9a-6835debc832f"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:assertion type="DataAndMetadataAssertion" name="Smart Assertion2 3" id="4fadc4dd-9361-4ed5-8d96-befbcc2b7950"><con:configuration xsi:type="con:DataAndMetadataAssertion"><con:mode>Received Metadata</con:mode><con:elements><con:path>$['Headers']['newassert']</con:path><con:element>newassert</con:element><con:operatorId>1</con:operatorId><con:enabled>true</con:enabled><con:expectedValue>234</con:expectedValue><con:caseSensitive>true</con:caseSensitive><con:numberType>false</con:numberType><con:expectedDataType>1</con:expectedDataType></con:elements><con:originalMessage>{"Headers":{"newassert":"Enter value here"}}</con:originalMessage></con:configuration></con:assertion><con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <entry key="sessionid" value="${Login#Response#$['sessionid']}" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>sessionid</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="f27a7295-1f08-4642-a3be-7ae9878517f0">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="712e7e53-7afa-4695-8bf2-bc7b9af8c08a">
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="834e9f34-445a-4d32-b042-ef79046664e3">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="19b3aa32-a1f5-474e-bd47-6ecf34074e03">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="8adf9beb-0001-459f-b854-d8161046b013">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="85fcf76d-cc70-4a0b-a2f6-7b043cf8233a">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="aaa8e0b8-c982-402f-aabc-53999ad72736">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="613bb63e-dfae-4525-8f53-7cc0745a1be1">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+              <con:entry environmentId="c7173b3a-fee4-45c8-906c-55deaef4eb0d">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="VirtRunnerTestStep" name="Stop Service" id="f1f7afe2-4ce3-4c98-8560-099b92921644">
+        <con:settings/>
+        <con:config>
+          <url>localhost</url>
+          <server>EcommerceVirt</server>
+          <action>stop</action>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="multiConfigureTestStep" name="API Connection" id="f6016724-31f9-4661-a5e5-2240b08949e9"><con:settings/><con:config activeStep="restMultiTestStep" xsi:type="con:MultiConfigurationStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequestStep service="Ecommerce" methodName="Login" resourcePath="/login/" xsi:type="con:RestRequestStep"><con:restRequest name="API Connection" id="b91af515-3994-4ad0-86ff-6d9e24fc2913" mediaType="application/json"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8084</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="a58eaaa3-fb36-4299-bb57-5bcce0d63464" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" id="2c6d0116-7cb4-435f-af18-1a959e991e09" name="Response SLA"><con:configuration><SLA>200</SLA></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile></con:credentials><con:parameters><con:entry key="username" value=""/><con:entry key="password" value=""/></con:parameters><con:parametersType><con:entry key="username" value="QUERY"/><con:entry key="password" value="QUERY"/></con:parametersType><con:parametersDisablesEncoding><con:entry key="username" value="false"/><con:entry key="password" value="false"/></con:parametersDisablesEncoding><con:environmentSpec/></con:restRequest></con:restRequestStep></con:config></con:testStep><con:properties/>
+      <con:reportParameters/>
+      <con:breakPoints>
+        <con:testStepId>48307fa4-2bf6-4550-8266-238bd4e03e1c</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+    </con:testCase>
